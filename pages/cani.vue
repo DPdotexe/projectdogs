@@ -69,24 +69,27 @@ export default {
     };
 
     const aggiungiCane = async () => {
-      try {
-        if (!datiCane.value.nome || !datiCane.value.razza || !datiCane.value.padrone) {
-          erroreAggiunta.value = 'Per favore compila tutti i campi';
-          return;
-        }
-        
-        const response = await axios.post('/api/cani', datiCane.value);
-        cani.value.push(response.data);
-        annullaAggiunta();
-      } catch (error) {
-        console.error('Errore durante l\'aggiunta del cane', error);
-        if (error.response && error.response.status === 500) {
-          erroreAggiunta.value = 'Si è verificato un errore durante l\'aggiunta del cane';
-        } else {
-          erroreAggiunta.value = 'Si è verificato un errore imprevisto';
-        }
-      }
-    };
+  try {
+    if (!datiCane.value.nome || !datiCane.value.razza || !datiCane.value.padrone) {
+      erroreAggiunta.value = 'Per favore compila tutti i campi';
+      return;
+    }
+
+    // Log dei dati inviati dal client
+    console.log('Dati del cane da inviare:', datiCane.value);
+
+    const response = await axios.post('/api/cani', datiCane.value);
+    cani.value.push(response.data);
+    annullaAggiunta();
+  } catch (error) {
+    console.error('Errore durante l\'aggiunta del cane', error);
+    if (error.response && error.response.status === 500) {
+      erroreAggiunta.value = 'Si è verificato un errore durante l\'aggiunta del cane';
+    } else {
+      erroreAggiunta.value = 'Si è verificato un errore imprevisto';
+    }
+  }
+};
 
     const eliminaCane = async (idCane) => {
       try {
@@ -98,7 +101,6 @@ export default {
     };
 
     const modificaCane = (cane) => {
-      // Implementa la logica per la modifica del cane
     };
 
     const annullaAggiunta = () => {
